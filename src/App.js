@@ -17,7 +17,8 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
-    BooksAPI.getAll()
+    //start by getting all books on my shelves.
+      BooksAPI.getAll()
         .then((myBooks) => {
           this.setState(() => ({
             myBooks
@@ -26,24 +27,28 @@ class BooksApp extends React.Component {
   }
 
   updateBook = (book, shelf) => {
+      //create an updated copy of the book
       let updatedBook = book
       updatedBook.shelf = shelf
 
+      //update the API using the API call to update the shelf
       BooksAPI.update(book, shelf)
         .then((response) => {
+            //when the API responds, update the local state
           this.setState((currentState) => ({
             myBooks: currentState.myBooks
-                .filter((b) => {
+                .filter((b) => { //remove the book that is going to be updated
                     return b.id !== book.id
                 })
-                .concat([updatedBook])
+                .concat([updatedBook]) //add the new version of the book
           }))
     })
 
     
   }
 
-  shelves = [
+  //an array of the shelves to display on the home screen
+  shelvesToDisplay = [
     {
       id: 'wantToRead',
       name: "Want to Read",
@@ -75,7 +80,7 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                { this.shelves.map((shelf) => (
+                { this.shelvesToDisplay.map((shelf) => (
                   <BookShelf
                       key={`shelf_${shelf.id}`}
                       shelfId={shelf.id}
