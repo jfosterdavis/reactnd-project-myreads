@@ -10,9 +10,36 @@ class Book extends Component {
 
     }
 
+
+
     render() {
 
         const {book, initialShelf, onChangeBookShelf} = this.props
+
+
+        let firstAuthorString, otherAuthorsString
+
+        //handle the different cases of author array
+        if (typeof book.authors !== 'undefined' && book.authors) {
+            if (book.authors.length > 0) {
+                let authorListCopy = [...book.authors] //create a copy of the authors for mutation
+                firstAuthorString = authorListCopy.shift().trim()
+                if (book.authors.length > 1) { //multiple authors
+                    otherAuthorsString = authorListCopy.map((a) => (`, ${a.trim()}`))
+                } else { //single author
+                    otherAuthorsString = ''
+                }
+            } else { //empty
+                firstAuthorString = 'No author'
+                otherAuthorsString = ''
+            }
+        } else { //empty or non existent
+
+            firstAuthorString = 'No author'
+            otherAuthorsString = ''
+        }
+
+        const authorString = `${firstAuthorString}${otherAuthorsString}`
 
         return (
             <div className="book">
@@ -27,7 +54,8 @@ class Book extends Component {
                     </div>
                 </div>
                 <div className="book-title">{book.title}</div>
-                <div className="book-authors">{book.authors}</div>
+
+                <div className="book-authors">{authorString}</div>
             </div>
 
         )

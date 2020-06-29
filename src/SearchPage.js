@@ -45,10 +45,6 @@ class SearchPage extends Component {
 
     }
 
-    clearQuery = () => {
-        this.updateQuery('')
-    }
-
     //take the books resulted from a query, and give the current shelf from my books if able, or set shelf to None
     blendResultsWithMyBooks(booksFromQuery, myBooks = this.props.myBooks) {
         return booksFromQuery.map((qBook) => {
