@@ -36,10 +36,20 @@ class BooksApp extends React.Component {
     
   }
 
-  shelves = {
-    wantToRead: "Want to Read",
-
-  }
+  shelves = [
+    {
+      id: 'wantToRead',
+      name: "Want to Read",
+    },
+    {
+      id: 'currentlyReading',
+      name: "Currently Reading",
+    },
+    {
+      id: 'read',
+      name: "Read",
+    },
+  ]
 
   render() {
 
@@ -58,14 +68,17 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <BookShelf
-                    shelfId={'wantToRead'}
-                    shelfName={'Want to Read'}
-                    books={this.state.myBooks.filter((b) => (
-                      b.shelf === 'wantToRead'
-                    ))}
-                    onChangeBookShelf={this.updateBook}
-                />
+                { this.shelves.map((shelf) => (
+                  <BookShelf
+                      key={`shelf_${shelf.id}`}
+                      shelfId={shelf.id}
+                      shelfName={shelf.name}
+                      books={this.state.myBooks.filter((b) => (
+                          b.shelf === shelf.id
+                      ))}
+                      onChangeBookShelf={this.updateBook}
+                  />
+                  ))}
               </div>
             </div>
             <div className="open-search">

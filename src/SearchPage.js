@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
 import {Link} from "react-router-dom"
 import PropTypes from 'prop-types'
+import BooksGrid from "./BooksGrid";
 
 class SearchPage extends Component {
     static propTypes = {
         myBooks: PropTypes.array.isRequired,
-        onChangeBookStatus: PropTypes.func.isRequired,
+        onChangeBookShelf: PropTypes.func.isRequired,
 
     }
 
@@ -36,7 +37,7 @@ class SearchPage extends Component {
                     } else { //else the resultant query appears to contain data, so update the state
                         this.setState(() => ({
                             resultBooks,
-                            resultText: `${resultBooks.length} books found for "${adjustedQuery}"`
+                            resultText: `Showing ${resultBooks.length} books found for "${adjustedQuery}"`
                         }))
                     }
                 })
@@ -50,7 +51,7 @@ class SearchPage extends Component {
 
     render() {
         const { query, resultBooks, resultText } = this.state
-        const { myBooks, onChangeBookStatus } = this.props
+        const { myBooks, onChangeBookShelf } = this.props
 
         return (
             <div className="search-books">
@@ -78,8 +79,12 @@ class SearchPage extends Component {
                         resultBooks.length !== 0 ?
                         (
                             <div>
-                                <ol className="books-grid"></ol>
                                 <span>{resultText}</span>
+                                <BooksGrid
+                                    books={resultBooks}
+                                    onChangeBookShelf={onChangeBookShelf}
+                                />
+
                             </div>
                     ) : (
                             <div>
