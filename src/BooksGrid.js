@@ -17,10 +17,7 @@ class BooksGrid extends Component {
                 {books.map((book)=> (
                     <li key={book.id} className={''}>
                         <Book
-                            imgUrl={book.imageLinks.smallThumbnail}
-                            authors={book.authors}
-                            title={book.title}
-                            currentShelf={book.shelf}
+                            book={book}
                             onChangeBookShelf={onChangeBookShelf}
                         />
                     </li>
