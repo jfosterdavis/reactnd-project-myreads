@@ -27,9 +27,6 @@ class BookAction extends Component {
     }
 
     render() {
-
-        const {book, onChangeBookShelf} = this.props
-
         return (
                 <select value={this.state.currentShelf} onChange={this.handleChange}>
                     <option value="move" disabled>Move to...</option>

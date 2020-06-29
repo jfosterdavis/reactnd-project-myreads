@@ -68,7 +68,7 @@ class SearchPage extends Component {
 
     render() {
         const { query, resultBooks, resultText } = this.state
-        const { myBooks, onChangeBookShelf } = this.props
+        const { onChangeBookShelf } = this.props
 
         return (
             <div className="search-books">
