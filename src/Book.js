@@ -25,7 +25,7 @@ class Book extends Component {
                 let authorListCopy = [...book.authors] //create a copy of the authors for mutation
                 firstAuthorString = authorListCopy.shift().trim()
                 if (book.authors.length > 1) { //multiple authors
-                    otherAuthorsString = authorListCopy.map((a) => (`, ${a.trim()}`))
+                    otherAuthorsString = authorListCopy.map((a) => (`, ${a}`))
                 } else { //single author
                     otherAuthorsString = ''
                 }
