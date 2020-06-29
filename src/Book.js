@@ -41,10 +41,16 @@ class Book extends Component {
 
         const authorString = `${firstAuthorString}${otherAuthorsString}`
 
+        //set image links, and handle case where no image link is provided
+        let imageThumbnailLink = ''
+        if (typeof book.imageLinks !== 'undefined') {
+            imageThumbnailLink = book.imageLinks.smallThumbnail
+        }
+
         return (
             <div className="book">
                 <div className="book-top">
-                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.smallThumbnail}"` }}></div>
+                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${imageThumbnailLink}"` }}></div>
                     <div className="book-shelf-changer">
                         <BookAction
                             book={book}

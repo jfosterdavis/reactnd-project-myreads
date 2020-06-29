@@ -24,16 +24,25 @@ class SearchPage extends Component {
             query: adjustedQuery
         }))
 
-        if (adjustedQuery !== '') //don't send the query if it is blank.
-        {
+        //rubric says that if query is blank, it should show no results.
+        //if (adjustedQuery !== '') //don't send the query if it is blank.
+        //{
             BooksAPI.search(adjustedQuery)
                 .then((resultBooks) => {
                     console.log("search result: ", resultBooks)
                     if (!resultBooks || resultBooks.error) { //if there is a blank/undefined result or an error
-                        this.setState(() => ({
-                            resultBooks: [],
-                            resultText: `No books found for "${adjustedQuery}".  Please try a different search.`
-                        }))
+                        if (adjustedQuery !== '') {
+                            this.setState(() => ({
+                                resultBooks: [],
+                                resultText: `No books found for "${adjustedQuery}".  Please try a different search.`
+                            }))
+                        } else { //the query is blank, show appropriate text
+                            this.setState(() => ({
+                                resultBooks: [],
+                                resultText: `Enter a search term above.`
+                            }))
+                        }
+
                     } else { //else the resultant query appears to contain data, so update the state
                         this.setState(() => ({
                             resultBooks: this.blendResultsWithMyBooks(resultBooks),
@@ -41,7 +50,7 @@ class SearchPage extends Component {
                         }))
                     }
                 })
-        }
+        //}
 
     }
 
