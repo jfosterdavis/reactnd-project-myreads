@@ -49,14 +49,15 @@ class BooksApp extends React.Component {
 
   //an array of the shelves to display on the home screen
   shelvesToDisplay = [
-    {
+      {
+          id: 'currentlyReading',
+          name: "Currently Reading",
+      },
+      {
       id: 'wantToRead',
       name: "Want to Read",
     },
-    {
-      id: 'currentlyReading',
-      name: "Currently Reading",
-    },
+
     {
       id: 'read',
       name: "Read",

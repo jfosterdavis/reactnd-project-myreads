@@ -36,7 +36,7 @@ class SearchPage extends Component {
                         }))
                     } else { //else the resultant query appears to contain data, so update the state
                         this.setState(() => ({
-                            resultBooks,
+                            resultBooks: this.blendResultsWithMyBooks(resultBooks),
                             resultText: `Showing ${resultBooks.length} books found for "${adjustedQuery}"`
                         }))
                     }
@@ -47,6 +47,23 @@ class SearchPage extends Component {
 
     clearQuery = () => {
         this.updateQuery('')
+    }
+
+    //take the books resulted from a query, and give the current shelf from my books if able, or set shelf to None
+    blendResultsWithMyBooks(booksFromQuery, myBooks = this.props.myBooks) {
+        return booksFromQuery.map((qBook) => {
+            let newBook = qBook;
+
+            //get any books that are in myBooks
+            const matchedBook = myBooks.filter((mB) => (
+                mB.id === newBook.id
+            ));
+            //console.log("Matched book: ", matchedBook)
+            //if a match was found, give it that book's shelf.  If not, give it a shelf of none.
+            newBook.shelf = matchedBook.length > 0 ? matchedBook[0].shelf : 'none';
+
+            return newBook
+        })
     }
 
     render() {

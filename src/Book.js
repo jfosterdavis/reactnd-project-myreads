@@ -5,13 +5,14 @@ import BookAction from "./BookAction";
 class Book extends Component {
     static propTypes = {
         book: PropTypes.object.isRequired,
+        initialShelf: PropTypes.string.isRequired,
         onChangeBookShelf: PropTypes.func.isRequired,
 
     }
 
     render() {
 
-        const {book, onChangeBookShelf} = this.props
+        const {book, initialShelf, onChangeBookShelf} = this.props
 
         return (
             <div className="book">
@@ -20,6 +21,7 @@ class Book extends Component {
                     <div className="book-shelf-changer">
                         <BookAction
                             book={book}
+                            initialShelf={initialShelf}
                             onChangeBookShelf={onChangeBookShelf}
                         />
                     </div>

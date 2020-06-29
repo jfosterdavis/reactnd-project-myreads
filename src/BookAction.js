@@ -4,14 +4,16 @@ import PropTypes from 'prop-types'
 class BookAction extends Component {
     static propTypes = {
         book: PropTypes.object.isRequired,
+        initialShelf: PropTypes.string.isRequired,
         onChangeBookShelf: PropTypes.func.isRequired,
 
     }
 
     constructor(props) {
         super(props);
+
         this.state = {
-            currentShelf: props.book.shelf,
+            currentShelf: props.initialShelf,
         };
 
         this.handleChange = this.handleChange.bind(this);

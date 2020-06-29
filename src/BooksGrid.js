@@ -12,12 +12,14 @@ class BooksGrid extends Component {
 
         const {books, onChangeBookShelf} = this.props
 
+
         return (
             <ol className="books-grid">
                 {books.map((book)=> (
                     <li key={book.id} className={''}>
                         <Book
                             book={book}
+                            initialShelf={book.shelf !== undefined ? book.shelf : 'None'}
                             onChangeBookShelf={onChangeBookShelf}
                         />
                     </li>
