@@ -12,13 +12,36 @@ class SearchPage extends Component {
 
     state = {
         query: '',
-        resultBooks: []
+        resultBooks: [],
+        resultText: 'Enter a search term above.'
     }
 
     updateQuery = (query) => {
+        const adjustedQuery = query
+
         this.setState(() => ({
-            query: query.trim()
+            query: adjustedQuery
         }))
+
+        if (adjustedQuery !== '') //don't send the query if it is blank.
+        {
+            BooksAPI.search(adjustedQuery)
+                .then((resultBooks) => {
+                    console.log("search result: ", resultBooks)
+                    if (!resultBooks || resultBooks.error) { //if there is a blank/undefined result or an error
+                        this.setState(() => ({
+                            resultBooks: [],
+                            resultText: `No books found for "${adjustedQuery}".  Please try a different search.`
+                        }))
+                    } else { //else the resultant query appears to contain data, so update the state
+                        this.setState(() => ({
+                            resultBooks,
+                            resultText: `${resultBooks.length} books found for "${adjustedQuery}"`
+                        }))
+                    }
+                })
+        }
+
     }
 
     clearQuery = () => {
@@ -26,7 +49,8 @@ class SearchPage extends Component {
     }
 
     render() {
-
+        const { query, resultBooks, resultText } = this.state
+        const { myBooks, onChangeBookStatus } = this.props
 
         return (
             <div className="search-books">
@@ -41,12 +65,29 @@ class SearchPage extends Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                        <input type="text" placeholder="Search by title or author"/>
+                        <input
+                            type="text"
+                            value={query}
+                            onChange={(event) => this.updateQuery(event.target.value)}
+                            placeholder="Search by title or author"/>
 
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <ol className="books-grid"></ol>
+                    {
+                        resultBooks.length !== 0 ?
+                        (
+                            <div>
+                                <ol className="books-grid"></ol>
+                                <span>{resultText}</span>
+                            </div>
+                    ) : (
+                            <div>
+
+                                <span>{resultText}</span>
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         )
